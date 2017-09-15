@@ -1,0 +1,4 @@
+asyncio_redis==0.14.3
+sanic==0.6.0
+sanic_session==0.1.5
+schema==0.6.6
