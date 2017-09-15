@@ -24,12 +24,6 @@ app = Sanic()
 async def index(request):
     return json_response({"message": "Hello."})
 
-@app.route("/reset-session")
-async def reset_session(request):
-    request['session'].clear()
-    request['session'].sid = uuid.uuid4().hex
-    return json_response({"message": "Session reset."})
-
 @app.route("/", methods=['POST'])
 async def register_experiment(request):
     redis = request.app.redis
@@ -104,6 +98,12 @@ async def success(request, experiment_id, choice):
     # get policy
     # compute posterior based on experiment
     return json_response({"message": "Ok."})
+
+@app.route("/reset-session")
+async def reset_session(request):
+    request['session'].clear()
+    request['session'].sid = uuid.uuid4().hex
+    return json_response({"message": "Session reset."})
 
 ################################################################
 ################################################################
