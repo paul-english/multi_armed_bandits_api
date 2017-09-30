@@ -57,14 +57,17 @@ async def epsilon_first(experiment_id, experiment, redis):
 
 async def epsilon_decreasing(experiment_id, experiment, redis):
     # TODO epsilon greedy, but updates eps over time
+    # TODO eps_t = min(1, eps_0 / t)
     pass
 
 async def vdbe(experiment_id, experiment, redis):
     # TODO
+    # http://www.tokic.com/www/tokicm/publikationen/papers/KI2011.pdf
     pass
 
 async def contextual_epsilon_greedy(experiment_id, experiment, redis):
-    # TODO
+    # TODO chooses epsilon based on some context
+    # https://pdfs.semanticscholar.org/27f4/3696f2ae19846744b66cd97f0f93897102e7.pdf
     pass
 
 async def thompson_sampling(experiment_id, experiment, redis):
@@ -75,18 +78,21 @@ async def thompson_sampling(experiment_id, experiment, redis):
     p = np.zeros(len(choices))
     for choice in choices:
         p[choice] = await redis.scard(
-            # FIXME
+            # FIXME (what needs fixing here? doh!)
             hash_key('successes', experiment_id) + ':' + choice
         )
     p /= p.sum()
     return np.random.choice(len(p), p=p)
 
 async def pricing(experiment_id, experiment, redis):
-    # TODO
+    # TODO prices each arm based on expected reward and expected future gain given addt'l knowledge,
+    # chooses highest priced arm
+    # http://bandit.sourceforge.net/Vermorel2005poker.pdf
     pass
 
 async def expected_successes_lost(experiment_id, experiment, redis):
-    # TODO
+    # TODO minimizes assignment of user to any inferior arm
+    # http://www.pnas.org/content/106/52/22387
     pass
 
 POLICIES = {
